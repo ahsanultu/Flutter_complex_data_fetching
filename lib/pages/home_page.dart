@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_navigation/models/category_model.dart';
 import 'package:http/http.dart' as http;
-
-import '../models/fetch_provider_model.dart';
 
 class HomePage extends StatefulWidget {
   static const String id = "home_screen";
@@ -20,17 +19,17 @@ class _HomePageState extends State<HomePage> {
   }
 
   /// A list to store fetched categories data.
-  List<List<FetchProviderModel>> fetchList = [];
+  late Data fetchList;
 
   /// A list to store children categories of the selected category.
-  List childrens = [];
+  List<Children>? childrens = [];
 
-  Future<List<FetchProviderModel>> getFetchList() async {
+  Future<CategoryModel> getFetchList() async {
     final response =
         await http.get(Uri.parse('http://10.0.2.2:8000/api/v1/categories'));
     if (response.statusCode == 200) {
-      /// parsing the JSON response and returning a list of `FetchProviderModel` objects.
-      return categoryFromJson(response.body);
+      /// parsing the JSON response and returning a list of `CategoryModel` objects.
+      return categoryModelFromJson(response.body);
     } else {
       /// if status code is not 200 throws an exception
       throw Exception('Failed to load categories');
@@ -45,7 +44,7 @@ class _HomePageState extends State<HomePage> {
         future: getFetchList(),
 
         /// The `builder` function is called when the `Future` completes.
-        builder: (context, AsyncSnapshot<List<FetchProviderModel>> snapshot) {
+        builder: (context, AsyncSnapshot<CategoryModel> snapshot) {
           /// If snapshot doesn't have data, shows a loading spinner.
           if (!snapshot.hasData) {
             return const Center(
@@ -58,48 +57,52 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Expanded(
                     flex: 2,
-                    child: ListView.builder(
-                      itemCount: snapshot.data?.length,
-                      itemBuilder: (context, index) {
-                        final category = snapshot.data?[index];
-                        return InkWell(
-                          onTap: () {
-                            setState(() {
-                              childrens = category.children;
-                            });
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Container(
-                              height: 50,
-                              decoration: BoxDecoration(
-                                color: Colors.blue,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: ListView.builder(
+                        itemCount: snapshot.data!.data!.length,
+                        itemBuilder: (context, index) {
+                          final category = snapshot.data!.data![index];
+
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 10),
+                            child: InkWell(
+                              onTap: () {
+                                setState(() {
+                                  childrens =
+                                      snapshot.data!.data![index].children;
+                                });
+                                print(childrens);
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.all(20),
+                                decoration: BoxDecoration(
+                                  color: Colors.blue,
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
                                 child: Text(
-                                  category!.name,
-                                  style: const TextStyle(color: Colors.white),
+                                  category.name.toString(),
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        );
-                      },
+                          );
+                        },
+                      ),
                     ),
                   ),
                   Expanded(
-                    child: ListView.builder(
-                      itemCount: childrens.length,
-                      itemBuilder: (context, index) {
-                        return Column(
-                          children: [
-                            Text(childrens[index].name.toString()),
-                          ],
-                        );
-                      },
-                    ),
-                  ),
+                      child: ListView.builder(
+                    itemCount: childrens?.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(left: 20, bottom: 5),
+                        child: Text('+ ${childrens![index].name}'),
+                      );
+                    },
+                  ))
                 ],
               ),
             );
