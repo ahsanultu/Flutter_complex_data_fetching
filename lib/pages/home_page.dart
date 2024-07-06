@@ -65,7 +65,7 @@ class _HomePageState extends State<HomePage> {
                         return InkWell(
                           onTap: () {
                             setState(() {
-                              childrens = category.children ?? [];
+                              childrens = category.children;
                             });
                           },
                           child: Padding(
