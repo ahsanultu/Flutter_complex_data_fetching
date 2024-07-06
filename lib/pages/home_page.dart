@@ -19,9 +19,6 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
-  /// A list to store fetched categories data.
-  late Data fetchList;
-
   /// A list to store children categories of the selected category.
   List<Children>? childrens = [];
 
