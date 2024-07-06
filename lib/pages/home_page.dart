@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder(
+      body: FutureBuilder<CategoryModel>(
         /// `future` parameter takes the `getFetchList` function which fetches data.
         future: getFetchList(),
 
