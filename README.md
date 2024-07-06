@@ -1,6 +1,6 @@
 # Flutter_ data fetching complex data
 
-### JSON structure
+### JSON structure:
   {
     "data": [ {...},... ]
   }
