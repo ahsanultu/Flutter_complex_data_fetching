@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_navigation/models/category_model.dart';
 import 'package:http/http.dart' as http;
@@ -72,7 +73,9 @@ class _HomePageState extends State<HomePage> {
                                   childrens =
                                       snapshot.data!.data![index].children;
                                 });
-                                print(childrens);
+                                if (kDebugMode) {
+                                  print(childrens);
+                                }
                               },
                               child: Container(
                                 padding: const EdgeInsets.all(20),
