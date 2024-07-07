@@ -92,15 +92,16 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   Expanded(
-                      child: ListView.builder(
-                    itemCount: childrens?.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(left: 20, bottom: 5),
-                        child: Text('+ ${childrens![index].name}'),
-                      );
-                    },
-                  ))
+                    child: ListView.builder(
+                      itemCount: childrens?.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.only(left: 20, bottom: 5),
+                          child: Text('+ ${childrens![index].name}'),
+                        );
+                      },
+                    ),
+                  ),
                 ],
               ),
             );
