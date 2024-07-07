@@ -4,8 +4,6 @@ import 'package:flutter_navigation/models/category_model.dart';
 import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
-  static const String id = "home_screen";
-
   const HomePage({super.key});
 
   @override
