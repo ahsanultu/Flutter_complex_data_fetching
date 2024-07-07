@@ -22,6 +22,8 @@ class _HomePageState extends State<HomePage> {
 
   Future<CategoryModel> getFetchList() async {
     final response =
+
+        /// using 10.0.2.2 instead of localhost to point android emulator to my localhost
         await http.get(Uri.parse('http://10.0.2.2:8000/api/v1/categories'));
     if (response.statusCode == 200) {
       /// parsing the JSON response and returning a list of `CategoryModel` objects.
