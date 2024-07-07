@@ -19,12 +19,13 @@ class _HomePageState extends State<HomePage> {
 
   /// A list to store children categories of the selected category.
   List<Children>? childrens = [];
+  String baseUrl = "http://10.0.2.2:8000/api/v1";
 
   Future<CategoryModel> getFetchList() async {
     final response =
 
         /// using 10.0.2.2 instead of localhost to point android emulator to my localhost
-        await http.get(Uri.parse('http://10.0.2.2:8000/api/v1/categories'));
+        await http.get(Uri.parse('$baseUrl/categories'));
     if (response.statusCode == 200) {
       /// parsing the JSON response and returning a list of `CategoryModel` objects.
       return categoryModelFromJson(response.body);

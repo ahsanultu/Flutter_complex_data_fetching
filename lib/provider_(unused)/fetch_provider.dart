@@ -3,7 +3,7 @@ import 'package:flutter_navigation/models/category_model.dart';
 import 'package:http/http.dart' as http;
 
 class FetchProvider with ChangeNotifier {
-  List<CategoryModel> _fetchList = [];
+  final List<CategoryModel> _fetchList = [];
   List<CategoryModel> _childrens = [];
 
   List<CategoryModel> get fetchList => _fetchList;
